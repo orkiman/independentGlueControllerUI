@@ -9,10 +9,10 @@
 
 // The setup() function runs once when the board starts up
 void setup() {
-  ::setup();  // Call the setup function from GlueController
+  controllerSetup();
 }
 
 // The loop() function runs continuously after setup()
 void loop() {
-  ::loop();  // Call the loop function from GlueController
+  controllerLoop();
 }

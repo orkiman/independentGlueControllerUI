@@ -59,7 +59,8 @@ struct ControllerConfig {
 };
 
 struct ActiveZone {
-  int from, to, next, space;
+  int64_t from, to, next;
+  int space;
 };
 
 struct ZoneRing {
@@ -71,8 +72,8 @@ struct ZoneRing {
 extern ControllerConfig config;
 extern GunConfig guns[4];
 
-extern volatile long encoderCount;
-extern int currentPosition;
+extern volatile uint32_t encoderCount;
+extern int64_t currentPosition64;
 
 extern int pageLength;
 extern bool isCalibrating;
@@ -80,7 +81,7 @@ extern unsigned long lastHeartbeat;
 
 extern bool gunStates[4];
 extern bool allFiringZonesInserted;
-extern int  firingBasePosition;
+extern int64_t firingBasePosition;
 extern int  currentThreshold;        // 0..ADC_MAX
 
 extern ZoneRing firingZones[4];
@@ -93,8 +94,8 @@ extern ZoneRing firingZones[4];
 #endif
 
 // ===== API =====
-void setup();
-void loop();
+void controllerSetup();
+void controllerLoop();
 
 void processSerial();
 void handleConfig(const JsonObject& json);

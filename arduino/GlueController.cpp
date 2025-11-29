@@ -1,5 +1,7 @@
-// ==== R4 mode switch (set to 1 for fastest hardware timer ISR on Uno R4) ====
-#define USE_R4_HWTIMER 1
+// ==== R4 mode switch ====
+// Set to 1 to use hardware timer ISR on Uno R4 (requires FspTimer library)
+// Set to 0 to use soft-timer polling (default, no extra dependencies)
+#define USE_R4_HWTIMER 0
 // ===========================================================================
 
 #include "GlueController.h"
@@ -133,6 +135,9 @@ static inline int getCurrentRaw(uint8_t gun) { return (int)gunCurrentADC12[gun];
 #endif
 // ----- end ADC backends -----
 
+// ===== Forward declarations =====
+static inline void setGun(uint8_t idx, bool on);
+
 // ===== Ring helpers =====
 static inline bool ring_push(ZoneRing &r, const ActiveZone &z){
   if (r.count >= MAX_ZONES_PER_GUN) return false;
@@ -154,7 +159,7 @@ static inline ActiveZone& ring_peek(ZoneRing &r, uint8_t idxFromHead){
 void encoderISR(){ encoderCount++; }
 
 // ===== Setup / Loop =====
-void setup() {
+void controllerSetup() {
   Serial.begin(115200);
 
   pinMode(ENCODER_PIN_A, INPUT_PULLUP);
@@ -178,7 +183,7 @@ void setup() {
   lastSensorState = digitalRead(SENSOR_PIN);
 }
 
-void loop() {
+void controllerLoop() {
 #if !defined(__AVR__)
   // soft-timer path needs ticking; hwtimer path doesn't
   #if !((USE_R4_HWTIMER==1) && (defined(ARDUINO_UNOR4_MINIMA) || defined(ARDUINO_UNOR4_WIFI)))

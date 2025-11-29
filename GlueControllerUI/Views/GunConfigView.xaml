@@ -1,0 +1,141 @@
+<UserControl x:Class="GlueControllerUI.Views.GunConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+            <TextBlock Text="Gun Configuration" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,20"/>
+            
+            <ItemsControl ItemsSource="{Binding Config.Guns}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Padding="15" Margin="0,0,0,15">
+                            <StackPanel>
+                                <!-- Gun Header -->
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="SprayBottle" 
+                                                                  VerticalAlignment="Center"
+                                                                  Width="24" Height="24"
+                                                                  Margin="0,0,10,0"/>
+                                        <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" 
+                                                   VerticalAlignment="Center">
+                                            <Run Text="Gun "/>
+                                            <Run Text="{Binding GunId, Mode=OneWay, StringFormat={}{0}}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <ToggleButton IsChecked="{Binding Enabled}" 
+                                                      Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                      Margin="0,0,10,0"/>
+                                        <TextBlock Text="Enabled" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                                
+                                <!-- Zones Table -->
+                                <Border BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                                        BorderThickness="1" 
+                                        CornerRadius="4"
+                                        Padding="10"
+                                        Margin="0,0,0,10">
+                                    <StackPanel>
+                                        <Grid Margin="0,0,0,5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="40"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="From (mm)" FontWeight="Bold" Margin="5,0"/>
+                                            <TextBlock Grid.Column="1" Text="To (mm)" FontWeight="Bold" Margin="5,0"/>
+                                            <TextBlock Grid.Column="2" Text="Space (mm)" FontWeight="Bold" Margin="5,0"/>
+                                        </Grid>
+                                        
+                                        <ItemsControl ItemsSource="{Binding Rows}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="0,2">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="40"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        
+                                                        <TextBox Grid.Column="0" 
+                                                                 Text="{Binding From, UpdateSourceTrigger=PropertyChanged}"
+                                                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                                                 materialDesign:HintAssist.Hint="From"
+                                                                 Margin="2"/>
+                                                        
+                                                        <TextBox Grid.Column="1" 
+                                                                 Text="{Binding To, UpdateSourceTrigger=PropertyChanged}"
+                                                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                                                 materialDesign:HintAssist.Hint="To"
+                                                                 Margin="2"/>
+                                                        
+                                                        <TextBox Grid.Column="2" 
+                                                                 Text="{Binding Space, UpdateSourceTrigger=PropertyChanged}"
+                                                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                                                 materialDesign:HintAssist.Hint="Space"
+                                                                 Margin="2"/>
+                                                        
+                                                        <Button Grid.Column="3"
+                                                                Style="{StaticResource MaterialDesignIconButton}"
+                                                                ToolTip="Remove zone"
+                                                                Command="{Binding DataContext.RemoveZoneCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                Margin="2">
+                                                            <Button.CommandParameter>
+                                                                <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                                                                    <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType=ItemsControl}"/>
+                                                                    <Binding/>
+                                                                </MultiBinding>
+                                                            </Button.CommandParameter>
+                                                            <materialDesign:PackIcon Kind="Delete" Foreground="Red"/>
+                                                        </Button>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </Border>
+                                
+                                <!-- Add Zone Button -->
+                                <Button Content="Add Zone"
+                                        Command="{Binding DataContext.AddZoneCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                                        HorizontalAlignment="Left">
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                                <TextBlock Text="Add Zone" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            <!-- Send Button -->
+            <Button Content="SEND TO CONTROLLER" 
+                    Command="{Binding SendConfigCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    HorizontalAlignment="Center"
+                    Padding="30,10"
+                    Margin="0,10,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

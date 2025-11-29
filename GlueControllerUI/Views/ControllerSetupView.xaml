@@ -1,0 +1,155 @@
+<UserControl x:Class="GlueControllerUI.Views.ControllerSetupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" MaxWidth="600">
+            <TextBlock Text="Controller Setup" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,20"/>
+            
+            <!-- Controller Type -->
+            <materialDesign:Card Padding="20" Margin="0,0,0,15">
+                <StackPanel>
+                    <TextBlock Text="Controller Type" Style="{StaticResource MaterialDesignBody1TextBlock}" Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Dots" 
+                                     IsChecked="{Binding Config.ControllerType, Converter={StaticResource StringEqualsConverter}, ConverterParameter=dots}"
+                                     Margin="0,0,15,0"/>
+                        <RadioButton Content="Lines" 
+                                     IsChecked="{Binding Config.ControllerType, Converter={StaticResource StringEqualsConverter}, ConverterParameter=lines}"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+            
+            <!-- Enable/Disable -->
+            <materialDesign:Card Padding="20" Margin="0,0,0,15">
+                <StackPanel Orientation="Horizontal">
+                    <ToggleButton IsChecked="{Binding Config.Enabled}" 
+                                  Style="{StaticResource MaterialDesignSwitchToggleButton}"/>
+                    <TextBlock Text="Controller Enabled" 
+                               Style="{StaticResource MaterialDesignBody1TextBlock}" 
+                               VerticalAlignment="Center" 
+                               Margin="10,0,0,0"/>
+                </StackPanel>
+            </materialDesign:Card>
+            
+            <!-- Encoder Settings -->
+            <materialDesign:Card Padding="20" Margin="0,0,0,15">
+                <StackPanel>
+                    <TextBlock Text="Encoder Settings" Style="{StaticResource MaterialDesignBody1TextBlock}" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBox Grid.Row="0" Grid.Column="0"
+                                 Text="{Binding Config.EncoderPulsesPerMm, StringFormat=F2}"
+                                 materialDesign:HintAssist.Hint="Pulses per mm"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,10,10"/>
+                        
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                 Text="{Binding Config.SensorOffset}"
+                                 materialDesign:HintAssist.Hint="Sensor Offset (mm)"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,0,10"/>
+                    </Grid>
+                </StackPanel>
+            </materialDesign:Card>
+            
+            <!-- Dots Mode Settings -->
+            <materialDesign:Card Padding="20" Margin="0,0,0,15">
+                <materialDesign:Card.Style>
+                    <Style TargetType="materialDesign:Card">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Config.ControllerType}" Value="lines">
+                                <Setter Property="Opacity" Value="0.5"/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:Card.Style>
+                <StackPanel>
+                    <TextBlock Text="Dots Mode Settings" Style="{StaticResource MaterialDesignBody1TextBlock}" Margin="0,0,0,15"/>
+                    
+                    <TextBlock Text="Dot Size" Style="{StaticResource MaterialDesignBody2TextBlock}" Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Small" 
+                                     IsChecked="{Binding Config.DotSize, Converter={StaticResource StringEqualsConverter}, ConverterParameter=small}"
+                                     Margin="0,0,15,0"/>
+                        <RadioButton Content="Medium" 
+                                     IsChecked="{Binding Config.DotSize, Converter={StaticResource StringEqualsConverter}, ConverterParameter=medium}"
+                                     Margin="0,0,15,0"/>
+                        <RadioButton Content="Large" 
+                                     IsChecked="{Binding Config.DotSize, Converter={StaticResource StringEqualsConverter}, ConverterParameter=large}"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+            
+            <!-- Lines Mode Settings -->
+            <materialDesign:Card Padding="20" Margin="0,0,0,15">
+                <materialDesign:Card.Style>
+                    <Style TargetType="materialDesign:Card">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Config.ControllerType}" Value="dots">
+                                <Setter Property="Opacity" Value="0.5"/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:Card.Style>
+                <StackPanel>
+                    <TextBlock Text="Lines Mode Settings" Style="{StaticResource MaterialDesignBody1TextBlock}" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBox Grid.Row="0" Grid.Column="0"
+                                 Text="{Binding Config.StartCurrent}"
+                                 materialDesign:HintAssist.Hint="Start Current (A)"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,10,10"/>
+                        
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                 Text="{Binding Config.StartDuration}"
+                                 materialDesign:HintAssist.Hint="Start Duration (ms)"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,0,10"/>
+                        
+                        <TextBox Grid.Row="1" Grid.Column="0"
+                                 Text="{Binding Config.HoldCurrent}"
+                                 materialDesign:HintAssist.Hint="Hold Current (A)"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,10,0"/>
+                        
+                        <TextBox Grid.Row="1" Grid.Column="1"
+                                 Text="{Binding Config.MinimumSpeed}"
+                                 materialDesign:HintAssist.Hint="Min Speed (mm/s)"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </Grid>
+                </StackPanel>
+            </materialDesign:Card>
+            
+            <!-- Send Button -->
+            <Button Content="SEND TO CONTROLLER" 
+                    Command="{Binding SendConfigCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    HorizontalAlignment="Center"
+                    Padding="30,10"
+                    Margin="0,10,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

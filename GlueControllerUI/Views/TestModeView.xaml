@@ -1,0 +1,117 @@
+<UserControl x:Class="GlueControllerUI.Views.TestModeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    
+    <StackPanel Margin="20" MaxWidth="500">
+        <TextBlock Text="Test Mode" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,20"/>
+        
+        <!-- Warning -->
+        <materialDesign:Card Padding="15" Margin="0,0,0,15" Background="#FFF3E0">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Warning" 
+                                          Foreground="#E65100"
+                                          Width="24" Height="24"
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,10,0"/>
+                <TextBlock Text="Test mode will fire glue guns. Ensure proper safety measures." 
+                           TextWrapping="Wrap"
+                           Foreground="#E65100"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </materialDesign:Card>
+        
+        <!-- Gun Controls -->
+        <materialDesign:Card Padding="20" Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock Text="Individual Gun Control" Style="{StaticResource MaterialDesignBody1TextBlock}" Margin="0,0,0,15"/>
+                
+                <UniformGrid Columns="2" Rows="2">
+                    <!-- Gun 1 -->
+                    <materialDesign:Card Padding="15" Margin="5">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="Gun 1" Style="{StaticResource MaterialDesignHeadline6TextBlock}" 
+                                       HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                            <ToggleButton IsChecked="{Binding TestGun1}"
+                                          Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          HorizontalAlignment="Center"/>
+                            <Ellipse Width="12" Height="12" 
+                                     Fill="{Binding TestGun1, Converter={StaticResource BoolToColorConverter}}"
+                                     HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </materialDesign:Card>
+                    
+                    <!-- Gun 2 -->
+                    <materialDesign:Card Padding="15" Margin="5">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="Gun 2" Style="{StaticResource MaterialDesignHeadline6TextBlock}" 
+                                       HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                            <ToggleButton IsChecked="{Binding TestGun2}"
+                                          Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          HorizontalAlignment="Center"/>
+                            <Ellipse Width="12" Height="12" 
+                                     Fill="{Binding TestGun2, Converter={StaticResource BoolToColorConverter}}"
+                                     HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </materialDesign:Card>
+                    
+                    <!-- Gun 3 -->
+                    <materialDesign:Card Padding="15" Margin="5">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="Gun 3" Style="{StaticResource MaterialDesignHeadline6TextBlock}" 
+                                       HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                            <ToggleButton IsChecked="{Binding TestGun3}"
+                                          Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          HorizontalAlignment="Center"/>
+                            <Ellipse Width="12" Height="12" 
+                                     Fill="{Binding TestGun3, Converter={StaticResource BoolToColorConverter}}"
+                                     HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </materialDesign:Card>
+                    
+                    <!-- Gun 4 -->
+                    <materialDesign:Card Padding="15" Margin="5">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="Gun 4" Style="{StaticResource MaterialDesignHeadline6TextBlock}" 
+                                       HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                            <ToggleButton IsChecked="{Binding TestGun4}"
+                                          Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          HorizontalAlignment="Center"/>
+                            <Ellipse Width="12" Height="12" 
+                                     Fill="{Binding TestGun4, Converter={StaticResource BoolToColorConverter}}"
+                                     HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </UniformGrid>
+            </StackPanel>
+        </materialDesign:Card>
+        
+        <!-- Quick Actions -->
+        <materialDesign:Card Padding="20">
+            <StackPanel>
+                <TextBlock Text="Quick Actions" Style="{StaticResource MaterialDesignBody1TextBlock}" Margin="0,0,0,15"/>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="ALL ON"
+                            Command="{Binding TestAllOnCommand}"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Background="#4CAF50"
+                            Margin="0,0,10,0"
+                            Padding="20,10"/>
+                    
+                    <Button Content="ALL OFF"
+                            Command="{Binding TestAllOffCommand}"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Background="#F44336"
+                            Padding="20,10"/>
+                </StackPanel>
+                
+                <TextBlock Text="Test mode has a 30 second timeout for safety"
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           HorizontalAlignment="Center"
+                           Margin="0,15,0,0"
+                           Opacity="0.7"/>
+            </StackPanel>
+        </materialDesign:Card>
+    </StackPanel>
+</UserControl>
