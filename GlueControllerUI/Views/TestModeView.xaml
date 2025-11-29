@@ -94,16 +94,20 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="ALL ON"
                             Command="{Binding TestAllOnCommand}"
-                            Style="{StaticResource MaterialDesignRaisedButton}"
                             Background="#4CAF50"
+                            Foreground="White"
                             Margin="0,0,10,0"
-                            Padding="20,10"/>
+                            Padding="30,10"
+                            MinWidth="100"
+                            Height="40"/>
                     
                     <Button Content="ALL OFF"
                             Command="{Binding TestAllOffCommand}"
-                            Style="{StaticResource MaterialDesignRaisedButton}"
                             Background="#F44336"
-                            Padding="20,10"/>
+                            Foreground="White"
+                            Padding="30,10"
+                            MinWidth="100"
+                            Height="40"/>
                 </StackPanel>
                 
                 <TextBlock Text="Test mode has a 30 second timeout for safety"

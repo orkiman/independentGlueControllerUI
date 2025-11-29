@@ -96,7 +96,7 @@ public partial class MainViewModel : ObservableObject
                 {
                     var json = System.Text.Json.JsonDocument.Parse(message);
                     var pulsesPerPage = json.RootElement.GetProperty("pulsesPerPage").GetInt32();
-                    var pulsesPerMm = pulsesPerPage / (CalibrationPageLength * 10.0);
+                    var pulsesPerMm = pulsesPerPage / (double)CalibrationPageLength;
                     
                     CalibrationResult = $"Pulses per page: {pulsesPerPage}\nCalculated: {pulsesPerMm:F2} pulses/mm";
                     Config.EncoderPulsesPerMm = pulsesPerMm;
